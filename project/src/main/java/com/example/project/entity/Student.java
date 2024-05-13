@@ -1,100 +1,73 @@
 package com.example.project.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.Date;
+import java.util.Set;
 
+@Getter
 @Entity
 @Table(name = "student")
-public class Student{
+public class Student {
+
     @Id
-    @GeneratedValue(strategy =GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "name",nullable = false)
-    private String name;
-
-    @Column(name = "username",nullable = false)
-    private String username;
-
-    @Column(name = "dateBirth",nullable = false)
-    private Date dateBirth;
-
-    @Column(name = "adresse",nullable = false)
-    private String adresse;
-
-    @Column(name = "email",nullable = false)
-    private String email;
-
-    @Column(name = "callNum",nullable = false)
-    private String callNum ;
-
-    public Student(Long id, String name, String username, Date dateBirth, String adresse, String email, String callNum) {
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.dateBirth = dateBirth;
-        this.adresse = adresse;
-        this.email = email;
-        this.callNum = callNum;
-    }
 
     public Student() {
 
     }
+    @OneToMany(mappedBy = "student")
+    Set<StudentPresence> studentPresence;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Date getDateBirth() {
-        return dateBirth;
-    }
-
-    public void setDateBirth(Date dateBirth) {
-        this.dateBirth = dateBirth;
-    }
-
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-
-    public String getEmail() {
-        return email;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getCallNum() {
-        return callNum;
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
     }
 
-    public void setCallNum(String callNum) {
-        this.callNum = callNum;
+    public void setDateNaiss(Date dateNaiss) {
+        this.dateNaiss = dateNaiss;
     }
+
+    public void setNumeroTel(String numeroTel) {
+        this.numeroTel = numeroTel;
+    }
+
+
+
+    @Column(name = "name",nullable = false)
+    private String name;
+
+    @Column(name = "firstname",nullable = false)
+    private String firstname;
+
+    @Column (name = "email",nullable = false)
+    private String email;
+
+    @Column (name = "adresse",nullable = false)
+    private String adresse;
+
+    @Column (name = "dateNaiss",nullable = false)
+    private Date dateNaiss;
+
+    @Column (name = "numeroTel",nullable = false)
+    private String numeroTel;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }
