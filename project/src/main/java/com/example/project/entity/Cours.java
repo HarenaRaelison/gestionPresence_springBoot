@@ -1,16 +1,21 @@
 package com.example.project.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.Set;
 
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
+
 @Table(name = "cours")
 public class Cours {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
