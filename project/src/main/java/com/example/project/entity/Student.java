@@ -1,5 +1,6 @@
 package com.example.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -51,16 +52,28 @@ public class Student {
     @Column(name = "name",nullable = false)
     private String name;
 
+    public String getNiveau() {
+        return niveau;
+    }
+
+    public void setNiveau(String niveau) {
+        this.niveau = niveau;
+    }
+
     @Column(name = "firstname",nullable = false)
     private String firstname;
 
     @Column (name = "email",nullable = false)
     private String email;
 
+    @Column (name = "niveau",nullable = false)
+    private String niveau;
+
     @Column (name = "adresse",nullable = false)
     private String adresse;
 
     @Column (name = "dateNaiss",nullable = false)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateNaiss;
 
     @Column (name = "numeroTel",nullable = false)

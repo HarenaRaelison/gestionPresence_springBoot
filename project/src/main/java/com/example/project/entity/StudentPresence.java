@@ -23,6 +23,14 @@ public class StudentPresence {
         return student;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     public void setStudent(Student student) {
         this.student = student;
     }

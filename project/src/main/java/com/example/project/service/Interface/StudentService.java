@@ -1,4 +1,4 @@
-package com.example.project.service;
+package com.example.project.service.Interface;
 
 import com.example.project.entity.Student;
 

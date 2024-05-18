@@ -30,7 +30,7 @@ public class Salle {
         this.etage = etage;
     }
 
-    public boolean isStatus() {
+    public boolean setStatus() {
         return status;
     }
 

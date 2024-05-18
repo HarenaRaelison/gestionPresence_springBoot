@@ -1,14 +1,15 @@
-package com.example.project.service;
+package com.example.project.service.Implement;
 
 import com.example.project.entity.Cours;
 import com.example.project.repository.CoursRepository;
+import com.example.project.service.Interface.CoursService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 @AllArgsConstructor
-public class CoursServiceImpl implements CoursService{
+public class CoursServiceImpl implements CoursService {
     private final CoursRepository coursRepository;
     @Override
     public Cours create(Cours cours) {

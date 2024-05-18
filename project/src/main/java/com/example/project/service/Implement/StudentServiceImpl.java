@@ -1,16 +1,16 @@
-package com.example.project.service;
+package com.example.project.service.Implement;
 
 import com.example.project.entity.Student;
 import com.example.project.repository.StudentRepository;
+import com.example.project.service.Interface.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Override
@@ -30,6 +30,7 @@ public class StudentServiceImpl implements StudentService{
                     p.setName(student.getName());
                     p.setFirstname(student.getFirstname());
                     p.setAdresse(student.getAdresse());
+                    p.setNiveau(student.getNiveau());
                     p.setEmail(student.getEmail());
 
                     return studentRepository.save(p);
