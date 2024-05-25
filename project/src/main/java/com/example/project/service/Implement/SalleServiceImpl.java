@@ -1,6 +1,7 @@
 package com.example.project.service.Implement;
 
 import com.example.project.entity.Salle;
+import com.example.project.entity.Student;
 import com.example.project.repository.SalleRepository;
 import com.example.project.service.Interface.SalleService;
 import lombok.AllArgsConstructor;
@@ -36,4 +37,5 @@ public class SalleServiceImpl implements SalleService {
     public String delete(Long Id) {
         return null;
     }
+
 }

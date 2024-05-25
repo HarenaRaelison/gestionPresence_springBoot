@@ -32,7 +32,6 @@ public class StudentServiceImpl implements StudentService {
                     p.setAdresse(student.getAdresse());
                     p.setNiveau(student.getNiveau());
                     p.setEmail(student.getEmail());
-
                     return studentRepository.save(p);
                         }).orElseThrow(() -> new RuntimeException("student is not found"));
 
@@ -42,5 +41,10 @@ public class StudentServiceImpl implements StudentService {
     public String delete(Long Id) {
         studentRepository.deleteById(Id);
         return "student deleted";
+    }
+
+    @Override
+    public List<Student> takeStudentByLevel(){
+        return null;
     }
 }

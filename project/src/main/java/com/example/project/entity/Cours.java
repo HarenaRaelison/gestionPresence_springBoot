@@ -24,6 +24,14 @@ public class Cours {
     @Column (name = "name")
     private String name;
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     public Cours() {
 
     }
@@ -46,36 +54,40 @@ public class Cours {
         this.hours_in = hours_in;
     }
 
-    public void setHours_out(String hours_out) {
-        this.hours_out = hours_out;
-    }
 
-    @Column (name ="date")
+
+    @Column (name ="date",nullable = false)
     private Date date;
 
-    public Cours(String name, Date date, int duration, String hours_in, String hours_out) {
+    public Cours(String name, Date date, int duration, String hours_in) {
         this.name = name;
         this.date = date;
         this.duration = duration;
         this.hours_in = hours_in;
-        this.hours_out = hours_out;
+
     }
 
-    @Column (name = "duration")
+    @Column (name = "duration",nullable = false)
     private int duration;
 
-    @Column (name = "hours_in")
+    @Column (name = "hours_in",nullable = false)
     private String hours_in;
 
-    @Column (name = "hours_out")
-    private String hours_out;
+    @Column(name = "status",nullable = false)
+    private Boolean status;
 
 
 
+    @Column(name = "niveau",nullable = false)
+    private  String niveau;
 
+    public String getNiveau() {
+        return niveau;
+    }
 
-
-
+    public void setNiveau(String niveau) {
+        this.niveau = niveau;
+    }
 
     public void setId(Long id) {
         this.id = id;

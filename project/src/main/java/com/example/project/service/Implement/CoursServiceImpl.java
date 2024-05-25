@@ -31,7 +31,8 @@ public class CoursServiceImpl implements CoursService {
                     p.setDate(cours.getDate());
                     p.setDuration(cours.getDuration());
                     p.setHours_in(cours.getHours_in());
-                    p.setHours_out(cours.getHours_out());
+                    p.setNiveau(cours.getNiveau());
+                    p.setStatus(cours.getStatus());
                     return coursRepository.save(p);
                 }
         ).orElseThrow(()->new RuntimeException("cours is not found"));
