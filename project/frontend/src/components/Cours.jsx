@@ -23,7 +23,7 @@ function Cours() {
 
     const handleClick = (course) => {
         localStorage.setItem('selectedCourse', JSON.stringify(course));
-        navigate('/students');
+        navigate(`/attendance?id=${course.id}`);
     };
 
     return (

@@ -14,5 +14,5 @@ public interface StudentService {
 
     String delete(Long Id);
 
-    List <Student> takeStudentByLevel();
+    List <Student> takeStudentByLevel(Long IdCours);
 }

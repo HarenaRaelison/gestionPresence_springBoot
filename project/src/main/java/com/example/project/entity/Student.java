@@ -78,9 +78,17 @@ public class Student {
 
     @Column (name = "numeroTel",nullable = false)
     private String numeroTel;
+    @Column (name = "status",nullable = false)
+    private Boolean status;
 
-    public void setId(Long id) {
-        this.id = id;
+
+    public Boolean getStatus() {
+        return status;
     }
 
+
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }
