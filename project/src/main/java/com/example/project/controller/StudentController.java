@@ -2,7 +2,6 @@ package com.example.project.controller;
 
 import com.example.project.entity.Student;
 import com.example.project.service.Interface.StudentService;
-import com.example.project.util.QRCodeGenerator;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,12 +10,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/student")
 public class StudentController {
-
     private final StudentService studentService;
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/create")
     public Student create(@RequestBody Student student) {
         Student createdStudent = studentService.create(student);
@@ -36,6 +34,13 @@ public class StudentController {
 
     @PutMapping("/update/{id}")
     public Student update(@PathVariable Long id, @RequestBody Student student) {
+        return studentService.update(id, student);
+    }
+
+    @PutMapping("/update/status/{id}")
+    public Student updateStatus(@PathVariable Long id, @RequestBody Boolean status) {
+        Student student = studentService.readById(id);
+        student.setStatus(status);
         return studentService.update(id, student);
     }
 

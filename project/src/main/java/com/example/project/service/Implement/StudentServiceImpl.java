@@ -15,6 +15,7 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
     private final CoursRepository coursRepository;
+
     @Override
     public Student create(Student newStudent) {
         return studentRepository.save(newStudent);
@@ -26,9 +27,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student update(Long Id, Student student) {
-        return studentRepository.findById(Id)
-                .map(p->{
+    public Student update(Long id, Student student) {
+        return studentRepository.findById(id)
+                .map(p -> {
                     p.setName(student.getName());
                     p.setFirstname(student.getFirstname());
                     p.setAdresse(student.getAdresse());
@@ -36,19 +37,18 @@ public class StudentServiceImpl implements StudentService {
                     p.setEmail(student.getEmail());
                     p.setStatus(student.getStatus());
                     return studentRepository.save(p);
-                        }).orElseThrow(() -> new RuntimeException("student is not found"));
-
+                }).orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
     @Override
-    public String delete(Long Id) {
-        studentRepository.deleteById(Id);
-        return "student deleted";
+    public String delete(Long id) {
+        studentRepository.deleteById(id);
+        return "Student deleted";
     }
 
     @Override
-    public List<Student> takeStudentByLevel(Long IdCours) {
-        Cours cours = coursRepository.findById(IdCours).orElseThrow(() -> new RuntimeException("Cours not found"));
+    public List<Student> takeStudentByLevel(Long idCours) {
+        Cours cours = coursRepository.findById(idCours).orElseThrow(() -> new RuntimeException("Course not found"));
 
         // Obtenir le niveau du cours
         String niveau = cours.getNiveau();
@@ -59,6 +59,9 @@ public class StudentServiceImpl implements StudentService {
         return students;
     }
 
-
-
+    @Override
+    public Student readById(Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.project.util;
+package com.example.project.controller;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;

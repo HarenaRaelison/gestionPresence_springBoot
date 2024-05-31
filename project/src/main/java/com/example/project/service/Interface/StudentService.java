@@ -3,7 +3,6 @@ package com.example.project.service.Interface;
 import com.example.project.entity.Student;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StudentService {
     Student create(Student newStudent);
@@ -15,4 +14,6 @@ public interface StudentService {
     String delete(Long Id);
 
     List <Student> takeStudentByLevel(Long IdCours);
+
+    Student readById(Long id);
 }

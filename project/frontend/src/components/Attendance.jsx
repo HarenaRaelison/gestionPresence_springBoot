@@ -1,22 +1,874 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { Scanner } from '@yudiel/react-qr-scanner'; // Correct import
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import { Scanner } from '@yudiel/react-qr-scanner';
+import axios from 'axios';
+import cheerio from 'cheerio';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function Attendance() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const courseId = queryParams.get('id');
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   const [data, setData] = useState([]);
   const [scannedResult, setScannedResult] = useState('');
 
@@ -27,37 +879,46 @@ function Attendance() {
         setData(res.data);
         console.log(res.data);
       } catch (error) {
-        console.error("Error fetching students:", error);
+        console.error('Error fetching students:', error);
       }
-    }
+    };
 
     fetchData();
   }, [courseId]);
 
-  const handleScan = async(result) => {
-    if (result) {
-      setScannedResult(result);
+  const handleScan = async (result) => {
+    if (result && result[0].rawValue) {
+      const scannedUrl = result[0].rawValue;
+      console.log('Scanned URL:', scannedUrl);
+      setScannedResult(scannedUrl);
+      
       try {
-        const res = await axios.put(`http://127.0.0.1:8080/api/student/update/${result}`, { status: true });
-        console.log("Student status updated:", res.data);
-        // Mettre à jour localement l'état des étudiants pour refléter le changement
-        const updatedStudents = data.map(student => {
-          if (student.id === result) {
-            return { ...student, status: true };
-          }
-          return student;
-        });
+        const pageResponse = await axios.get(scannedUrl);
+        const $ = cheerio.load(pageResponse.data);
+        
+        // Assurez-vous de remplacer 'SELECTOR' par le sélecteur correct pour trouver l'ID que vous voulez extraire
+        const id = $('body').text().trim().split("\n")[0]; // Vous pouvez ajuster ce sélecteur selon la structure de votre page
+        console.log('Extracted ID:', id);
+
+        const res = await axios.put(`http://127.0.0.1:8080/api/student/update/status/${id}`, true, {
+  headers: {
+    'Content-Type': 'application/json', 
+  }
+});
+        console.log('Student status updated:', res.data);
+        
+        const updatedStudents = data.map(student => student.id === id ? { ...student, status: true } : student);
         setData(updatedStudents);
       } catch (error) {
-        console.error("Error updating student status:", error);
+        console.error('Error fetching or parsing the page:', error.response ? error.response.data : error.message);
       }
-      console.log(result);
-      // Handle the scanned result here (e.g., fetch data or navigate)
+    } else {
+      console.error('No rawValue found in scanned result:', result);
     }
   };
 
   const handleError = (error) => {
-    console.error("QR scan error:", error);
+    console.error('QR scan error:', error);
   };
 
   return (
@@ -68,15 +929,10 @@ function Attendance() {
           <Typography variant="h6" gutterBottom>Scan QR Code</Typography>
           <Paper sx={{ padding: 2 }}>
             <Scanner
-              onScan={(result, error) => {
-                if (result) {
-                  handleScan(result?.text);
-                }
-
-                if (error) {
-                  handleError(error);
-                }
+              onScan={(result) => {
+                if (result) handleScan(result);
               }}
+              onError={handleError}
               style={{ width: '100%' }}
             />
             {scannedResult && (
