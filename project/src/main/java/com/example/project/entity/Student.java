@@ -69,7 +69,7 @@ public class Student {
     @Column (name = "niveau",nullable = false)
     private String niveau;
 
-    @Column (name = "adresse",nullable = false)
+    @Column (name = "adresse",nullable = true)
     private String adresse;
 
     @Column (name = "dateNaiss",nullable = false)

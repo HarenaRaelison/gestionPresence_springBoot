@@ -1,4 +1,3 @@
-
 // App.jsx
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -15,13 +14,11 @@ export default function App() {
       <PersistentDrawerRight>
         <Routes>
           <Route path="/cours" element={<Cours />} />
-          <Route path="/salle" element={<Salle />} />
+
           <Route path="/students" element={<Students />} />
           <Route path="/attendance" element={<Attendance />} />
-          <Route path="/rapport" element={<Rapport />} />
         </Routes>
       </PersistentDrawerRight>
     </Router>
   );
 }
-

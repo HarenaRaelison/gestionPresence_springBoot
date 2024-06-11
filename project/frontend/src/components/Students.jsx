@@ -1,12 +1,10 @@
-import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner"; // Import du composant Icon
 import {
-  Box,
   Button,
   Grid,
   IconButton,
   InputLabel,
   MenuItem,
-  Modal,
   Select,
   Table,
   TableBody,
@@ -16,8 +14,9 @@ import {
   TableRow,
   TextField,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -29,6 +28,7 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import QRCode from "qrcode.react";
 import React, { useEffect, useRef, useState } from "react";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -37,6 +37,19 @@ function Students() {
   const [studentData, setStudentData] = useState([]);
   const pdfContentRefs = useRef({}); // Référence pour les éléments 'pdf-content'
   const [open, setOpen] = useState(false);
+  const [studentName, setStudentName] = useState("");
+  const [studentFirstname, setStudentFirstname] = useState("");
+  const [studentAddress, setStudentAddress] = useState("");
+  const [studentEmail, setStudentEmail] = useState("");
+  const [niveau, setNiveau] = useState("");
+  const [studentnumeroTel, setStudentnumeroTel] = useState("");
+  const [studentdateNaiss, setStudentdateNaiss] = useState("");
+  const [studentStatus, setStudentStatus] = useState(true); // true for active, false for inactive
+  const [selectedNiveau, setSelectedNiveau] = useState("");
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -44,10 +57,42 @@ function Students() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleChange = (event) => {
-    setNiveau(event.target.value);
+
+  const handleCreateStudent = async () => {
+    try {
+      const res = await axios.post("http://localhost:8080/api/student/create", {
+        name: studentName,
+        firstname: studentFirstname,
+        address: studentAddress,
+        email: studentEmail,
+        niveau: niveau,
+        numeroTel: studentnumeroTel,
+        dateNaiss: studentdateNaiss,
+        status: studentStatus,
+      });
+      const newStudent = res.data;
+      setStudentData([...studentData, newStudent]);
+      setOpen(false);
+      // Rafraîchir la liste des étudiants après l'ajout
+      fetchData();
+    } catch (error) {
+      console.error("Error creating student:", error);
+    }
   };
-  const [Niveau, setNiveau] = React.useState("");
+
+  const fetchData = async () => {
+    try {
+      const res = await axios.get("http://localhost:8080/api/student");
+      const sortedData = res.data.sort((a, b) => a.niveau.localeCompare(b.niveau));
+      setStudentData(sortedData);
+    } catch (error) {
+      console.error("Error fetching all students:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []); // Appel uniquement au chargement initial
 
   const handleQRgenerate = (student) => {
     const pdfContentRef = pdfContentRefs.current[student.id]; // Référence spécifique à l'étudiant
@@ -118,140 +163,165 @@ function Students() {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`http://127.0.0.1:8080/api/student`);
-        setStudentData(res.data);
-        console.log(res.data);
-      } catch (error) {
-        console.error("Error fetching all students:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <div>
       <Grid container spacing={2}>
-        <React.Fragment>
-          <Button variant="outlined" onClick={handleClickOpen}>
+        <Grid item xs={12} sm={6}>
+          <InputLabel id="select-niveau-label">Filter by Niveau</InputLabel>
+          <Select
+            labelId="select-niveau-label"
+            id="select-niveau"
+            value={selectedNiveau}
+            onChange={(e) => setSelectedNiveau(e.target.value)}
+            fullWidth
+          >
+            <MenuItem value="">All</MenuItem>
+            <MenuItem value="L1">L1</MenuItem>
+            <MenuItem value="L2">L2</MenuItem>
+            <MenuItem value="L3">L3</MenuItem>
+            <MenuItem value="M1">M1</MenuItem>
+            <MenuItem value="M2">M2</MenuItem>
+          </Select>
+        </Grid>
+        <Grid item xs={12} sm={6} container justifyContent={isMobile ? "center" : "flex-end"}>
+          <Button variant="contained" color="primary" sx={{marginRight:"600px"}} onClick={handleClickOpen}>
             Add Student
           </Button>
-          <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="add an Student"
-          >
-            <DialogTitle>{"Add a Student"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-slide-description">
-                Please complete all forms.
-              </DialogContentText>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    id="filled-basic"
-                    label="Name"
-                    variant="filled"
-                    fullWidth
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="filled-basic"
-                    label="Firstname"
-                    variant="filled"
-                    fullWidth
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="filled-basic"
-                    label="Adresse"
-                    variant="filled"
-                    fullWidth
-                    margin="dense"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <InputLabel id="demo-simple-select-label">Niveau</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={Niveau}
-                    label="Niveau"
-                    onChange={handleChange}
-                    fullWidth
-                    margin="dense"
-                  >
-                    <MenuItem value={"L1"}>L1</MenuItem>
-                    <MenuItem value={"L2"}>L2</MenuItem>
-                    <MenuItem value={"L3"}>L3</MenuItem>
-                    <MenuItem value={"M1"}>M1</MenuItem>
-                    <MenuItem value={"M2"}>M2</MenuItem>
-                  </Select>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="filled-basic"
-                    label="Email"
-                    variant="filled"
-                    fullWidth
-                    margin="dense"
-                  />
-                </Grid>
-              </Grid>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Add
-              </Button>
-              <Button onClick={handleClose} color="secondary">
-                Cancel
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </React.Fragment>
-        {studentData.map((student) => (
-          <Grid item xs={12} md={6} key={student.id}>
-            <TableContainer>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>
-                      <Typography variant="h6">Student List CE</Typography>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Typography variant="h6">Code QR</Typography>
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{handleQRgenerate(student)}</TableCell>
-                    <TableCell align="right">
-                      <IconButton
-                        aria-label="Generate QR Code"
-                        onClick={() => handleDownloadPDF(student.id)}
-                      >
-                        <QrCodeScannerIcon
-                          style={{ width: "48px", height: "48px" }}
-                        />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        ))}
+        </Grid>
       </Grid>
+
+      <Grid container spacing={2}>
+        {studentData
+          .filter((student) => selectedNiveau === "" || student.niveau === selectedNiveau)
+          .map((student, index) => (
+            <Grid item xs={12} md={6} key={student.id}>
+              {index === 0 || studentData[index - 1].niveau !== student.niveau ? (
+                <Typography variant="h4">Niveau {student.niveau}</Typography>
+              ) : null}
+              <TableContainer>
+                <Table aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>
+                        <Typography variant="h6">Student List CE</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography variant="h6">Code QR</Typography>
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell>{handleQRgenerate(student)}</TableCell>
+                      <TableCell align="right">
+                        <IconButton
+                          aria-label="Generate QR Code"
+                          onClick={() => handleDownloadPDF(student.id)}
+                        >
+                          <QrCodeScannerIcon style={{ width: "48px", height: "48px" }} />
+                        </IconButton>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Grid>
+          ))}
+      </Grid>
+
+      <Dialog open={open} TransitionComponent={Transition} keepMounted onClose={handleClose}>
+        <DialogTitle>Add New Student</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please fill out the form below to add a new student.
+          </DialogContentText>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoFocus
+                margin="dense"
+                label="Name"
+                fullWidth
+                value={studentName}
+                onChange={(e) => setStudentName(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                margin="dense"
+                label="Firstname"
+                fullWidth
+                value={studentFirstname}
+                onChange={(e) => setStudentFirstname(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                margin="dense"
+                label="Address"
+                fullWidth
+                value={studentAddress}
+                onChange={(e) => setStudentAddress(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                margin="dense"
+                label="Email"
+                fullWidth
+                value={studentEmail}
+                onChange={(e) => setStudentEmail(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <InputLabel id="niveau-label">Niveau</InputLabel>
+              <Select
+                labelId="niveau-label"
+                id="niveau-select"
+                fullWidth
+                value={niveau}
+                onChange={(e) => setNiveau(e.target.value)}
+              >
+                <MenuItem value="L1">L1</MenuItem>
+                <MenuItem value="L2">L2</MenuItem>
+                <MenuItem value="L3">L3</MenuItem>
+                <MenuItem value="M1">M1</MenuItem>
+                <MenuItem value="M2">M2</MenuItem>
+              </Select>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                margin="dense"
+                label="Phone Number"
+                fullWidth
+                value={studentnumeroTel}
+                onChange={(e) => setStudentnumeroTel(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                margin="dense"
+                label="Date of Birth"
+                type="date"
+                fullWidth
+                value={studentdateNaiss}
+                onChange={(e) => setStudentdateNaiss(e.target.value)}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              />
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={handleCreateStudent} color="primary">
+            Add Student
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

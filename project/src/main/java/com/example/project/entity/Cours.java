@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 @Builder
 @AllArgsConstructor
-
+@NoArgsConstructor
 @Table(name = "cours")
 public class Cours {
 
@@ -21,8 +21,49 @@ public class Cours {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "date")
+    private Date date;
+
+    @Column(name = "duration")
+    private int duration;
+
+    @Column(name = "hours_in")
+    private String hours_in;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public String getHours_in() {
+        return hours_in;
+    }
+
+    public void setHours_in(String hours_in) {
+        this.hours_in = hours_in;
+    }
 
     public Boolean getStatus() {
         return status;
@@ -32,55 +73,6 @@ public class Cours {
         this.status = status;
     }
 
-    public Cours() {
-
-    }
-    @OneToMany(mappedBy = "cours")
-    Set<StudentPresence> studentPresences;
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public void setHours_in(String hours_in) {
-        this.hours_in = hours_in;
-    }
-
-
-
-    @Column (name ="date",nullable = false)
-    private Date date;
-
-    public Cours(String name, Date date, int duration, String hours_in) {
-        this.name = name;
-        this.date = date;
-        this.duration = duration;
-        this.hours_in = hours_in;
-
-    }
-
-    @Column (name = "duration",nullable = false)
-    private int duration;
-
-    @Column (name = "hours_in",nullable = false)
-    private String hours_in;
-
-    @Column(name = "status",nullable = false)
-    private Boolean status;
-
-
-
-    @Column(name = "niveau",nullable = false)
-    private  String niveau;
-
     public String getNiveau() {
         return niveau;
     }
@@ -89,8 +81,22 @@ public class Cours {
         this.niveau = niveau;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Set<StudentPresence> getStudentPresences() {
+        return studentPresences;
     }
 
+    public void setStudentPresences(Set<StudentPresence> studentPresences) {
+        this.studentPresences = studentPresences;
+    }
+
+    @Column(name = "status")
+    private Boolean status;
+
+    @Column(name = "niveau")
+    private String niveau;
+
+    @OneToMany(mappedBy = "cours")
+    Set<StudentPresence> studentPresences;
+
+    // Getters and setters omitted for brevity
 }

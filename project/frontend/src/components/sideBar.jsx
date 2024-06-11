@@ -22,6 +22,7 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import "./css/sidebar.css";
 
 const drawerWidth = 240;
 
@@ -72,7 +73,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function PersistentDrawerRight({ children }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const list = ["Cours", "Salle", "Students", "Attendance", "Rapport"];
+  const list = ["Cours",  "Students", "Attendance"];
   const icons = [
     LocalLibraryIcon,
     MeetingRoomIcon,
@@ -80,7 +81,7 @@ export default function PersistentDrawerRight({ children }) {
     QrCodeScannerIcon,
     ReceiptLongIcon,
   ];
-  const routes = ["/cours", "/salle", "/students", "/attendance", "/rapport"];
+  const routes = ["/cours", "/students", "/attendance"];
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -92,11 +93,16 @@ export default function PersistentDrawerRight({ children }) {
 
   return (
     <div>
-      
+      <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }} component="div">
-            {/* App Title */}
+        <Toolbar sx={{ backgroundColor: "#726759" }}>
+          <Typography
+            variant="h6"
+            noWrap
+            sx={{ flexGrow: 1, color: "#FFFFFF" }}
+            component="div"
+          >
+            gestion de présence
           </Typography>
           <IconButton
             color="inherit"
@@ -109,13 +115,15 @@ export default function PersistentDrawerRight({ children }) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      
+
       <Drawer
         sx={{
           width: drawerWidth,
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
+            backgroundColor: '#726759',
+            color: "#FFFFFF"
           },
         }}
         variant="persistent"
@@ -125,9 +133,9 @@ export default function PersistentDrawerRight({ children }) {
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
-              <ChevronLeftIcon />
+              <ChevronLeftIcon sx={{ color: "#FFFFFF" }} />
             ) : (
-              <ChevronRightIcon />
+              <ChevronRightIcon sx={{ color: "#FFFFFF" }} />
             )}
           </IconButton>
         </DrawerHeader>
@@ -136,7 +144,9 @@ export default function PersistentDrawerRight({ children }) {
           {list.map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton component={Link} to={routes[index]}>
-                <ListItemIcon>{React.createElement(icons[index])}</ListItemIcon>
+                <ListItemIcon sx={{ color: "#FFFFFF" }}>
+                  {React.createElement(icons[index])}
+                </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
             </ListItem>
